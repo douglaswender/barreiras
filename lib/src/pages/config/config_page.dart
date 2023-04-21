@@ -84,8 +84,9 @@ class _ConfigPageState extends State<ConfigPage> {
                   height: 40,
                   width: double.maxFinite,
                   child: ElevatedButton(
-                    onPressed: () {
-                      store.shuffleOthers();
+                    onPressed: () async {
+                      await store.shuffleOthers();
+                      Navigator.pop(context);
                     },
                     child: const Text('Embaralhar as barreiras'),
                   ),
@@ -97,8 +98,9 @@ class _ConfigPageState extends State<ConfigPage> {
                   height: 40,
                   width: double.maxFinite,
                   child: ElevatedButton(
-                    onPressed: () {
-                      store.shuffleAll();
+                    onPressed: () async {
+                      await store.shuffleAll();
+                      Navigator.pop(context);
                     },
                     child: const Text('Embaralhar todos'),
                   ),
@@ -110,8 +112,9 @@ class _ConfigPageState extends State<ConfigPage> {
                   height: 40,
                   width: double.maxFinite,
                   child: ElevatedButton(
-                    onPressed: () {
-                      store.removeAll();
+                    onPressed: () async {
+                      await store.removeAll();
+                      Navigator.pop(context);
                     },
                     child: const Text('Remover todos'),
                   ),

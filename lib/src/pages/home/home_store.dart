@@ -69,7 +69,7 @@ abstract class _HomeStoreBase with Store {
   Future<void> allTeamOut() async {
     history.add(names.toList());
     winStreak = 0;
-    List<String> allTeam = names.getRange(0, 6).toList();
+    List<String> allTeam = names.getRange(0, numberOfPlayers * 2).toList();
 
     for (var element in allTeam) {
       names.remove(element);
@@ -86,7 +86,7 @@ abstract class _HomeStoreBase with Store {
   Future<void> blueTeamOut() async {
     history.add(names.toList());
     winStreak = 1;
-    List<String> blueTeam = names.getRange(0, 3).toList();
+    List<String> blueTeam = names.getRange(0, numberOfPlayers).toList();
 
     for (var element in blueTeam) {
       names.remove(element);
@@ -103,7 +103,8 @@ abstract class _HomeStoreBase with Store {
   Future<void> greenTeamOut() async {
     history.add(names.toList());
     winStreak++;
-    List<String> greenTeam = names.getRange(3, 6).toList();
+    List<String> greenTeam =
+        names.getRange(numberOfPlayers, numberOfPlayers * 2).toList();
 
     for (var element in greenTeam) {
       names.remove(element);

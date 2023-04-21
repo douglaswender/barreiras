@@ -49,8 +49,18 @@ class _HomePageState extends State<HomePage> {
                   focus.unfocus();
                   await Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => const ConfigPage(),
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const ConfigPage(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) =>
+                                SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(1, 1),
+                            end: Offset.zero,
+                          ).animate(animation),
+                          child: child,
+                        ),
                       ));
                 },
                 icon: const Icon(Icons.settings))
@@ -114,8 +124,11 @@ class _HomePageState extends State<HomePage> {
                                       : Colors.red,
                               title: Text(
                                 store.names[index],
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 18),
+                                style: index < store.numberOfPlayers * 2
+                                    ? const TextStyle(
+                                        color: Colors.black, fontSize: 36)
+                                    : const TextStyle(
+                                        color: Colors.black, fontSize: 18),
                               ),
                               onLongPress: () {
                                 store.removeName(store.names[index]);
