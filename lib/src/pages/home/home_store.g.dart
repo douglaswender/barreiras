@@ -9,6 +9,14 @@ part of 'home_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$HomeStore on _HomeStoreBase, Store {
+  Computed<int>? _$suggestedNumberOfPlayersComputed;
+
+  @override
+  int get suggestedNumberOfPlayers => (_$suggestedNumberOfPlayersComputed ??=
+          Computed<int>(() => super.suggestedNumberOfPlayers,
+              name: '_HomeStoreBase.suggestedNumberOfPlayers'))
+      .value;
+
   late final _$namesAtom = Atom(name: '_HomeStoreBase.names', context: context);
 
   @override
@@ -208,7 +216,8 @@ names: ${names},
 history: ${history},
 numberOfPlayers: ${numberOfPlayers},
 maxWinStreak: ${maxWinStreak},
-winStreak: ${winStreak}
+winStreak: ${winStreak},
+suggestedNumberOfPlayers: ${suggestedNumberOfPlayers}
     ''';
   }
 }

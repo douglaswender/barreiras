@@ -1,6 +1,7 @@
 import 'package:barreiras/src/pages/home/home_store.dart';
 import 'package:barreiras/src/widgets/text_field_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 class ConfigPage extends StatefulWidget {
@@ -176,6 +177,36 @@ class _ConfigPageState extends State<ConfigPage> {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  children: [
+                    Observer(builder: (_) {
+                      return Text(
+                        'Quantidade de jogadores: ${store.names.length}',
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
+                      );
+                    }),
+                  ],
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  children: [
+                    Observer(builder: (_) {
+                      return Text(
+                        'Jogadores por barreira indicado: ${store.suggestedNumberOfPlayers}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                        ),
+                      );
+                    }),
+                  ],
+                )
               ],
             ),
           ),

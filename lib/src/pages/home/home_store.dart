@@ -22,6 +22,17 @@ abstract class _HomeStoreBase with Store {
   @observable
   int winStreak = 0;
 
+  @computed
+  int get suggestedNumberOfPlayers {
+    int suggestion = 0;
+    if (names.length < 15) {
+      suggestion = 3;
+    } else {
+      suggestion = 4;
+    }
+    return suggestion;
+  }
+
   @action
   Future<void> loadLocal() async {
     final prefs = await SharedPreferences.getInstance();
