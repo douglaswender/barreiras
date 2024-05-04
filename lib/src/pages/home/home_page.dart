@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Barreiras'),
+          scrolledUnderElevation: 0,
           actions: [
             Observer(
               builder: (_) {
@@ -49,188 +50,183 @@ class _HomePageState extends State<HomePage> {
                   focus.unfocus();
                   await Navigator.push(
                       context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            const ConfigPage(),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) =>
-                                SlideTransition(
-                          position: Tween<Offset>(
-                            begin: const Offset(1, 1),
-                            end: Offset.zero,
-                          ).animate(animation),
-                          child: child,
-                        ),
-                      ));
+                      MaterialPageRoute(
+                          builder: (context) => const ConfigPage()));
                 },
                 icon: const Icon(Icons.settings))
           ],
         ),
-        body: SizedBox(
-          height: double.maxFinite,
-          child: Column(
-            children: [
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.lightBlue),
-                            onPressed: () {
-                              store.blueTeamOut();
-                            },
-                            child: const Text('azul sai'))),
-                    SizedBox(
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red),
-                            onPressed: () {
-                              store.allTeamOut();
-                            },
-                            child: const Text('sai os 2'))),
-                    SizedBox(
-                        child: Observer(
-                      builder: (_) => ElevatedButton(
+        body: Column(
+          children: [
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                      child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.lightGreen),
-                          onPressed: store.winStreak == store.maxWinStreak - 1
-                              ? null
-                              : () {
-                                  store.greenTeamOut();
-                                },
-                          child: const Text('verde sai')),
-                    ))
-                  ],
-                ),
-              ),
-              Observer(
-                builder: (_) {
-                  return Expanded(
-                    child: Stack(
-                      children: [
-                        ListView.builder(
-                          itemCount: store.names.length,
-                          itemBuilder: (_, index) {
-                            return ListTile(
-                              tileColor: index < store.numberOfPlayers
-                                  ? Colors.blue
-                                  : index >= store.numberOfPlayers &&
-                                          index < store.numberOfPlayers * 2
-                                      ? Colors.lightGreen
-                                      : Colors.red,
-                              title: Text(
-                                store.names[index],
-                                style: index < store.numberOfPlayers * 2
-                                    ? const TextStyle(
-                                        color: Colors.black, fontSize: 36)
-                                    : const TextStyle(
-                                        color: Colors.black, fontSize: 18),
-                              ),
-                              onLongPress: () {
-                                store.removeName(store.names[index]);
+                            backgroundColor: Colors.lightBlue,
+                          ),
+                          onPressed: () {
+                            store.blueTeamOut();
+                          },
+                          child: const Text(
+                            'azul sai',
+                            style: TextStyle(color: Colors.white),
+                          ))),
+                  SizedBox(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red),
+                          onPressed: () {
+                            store.allTeamOut();
+                          },
+                          child: const Text(
+                            'sai os 2',
+                            style: TextStyle(color: Colors.white),
+                          ))),
+                  SizedBox(
+                      child: Observer(
+                    builder: (_) => ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.lightGreen),
+                        onPressed: store.winStreak == store.maxWinStreak - 1
+                            ? null
+                            : () {
+                                store.greenTeamOut();
                               },
-                              onTap: () {
-                                showDialog(
-                                  barrierDismissible: true,
-                                  context: context,
-                                  builder: (context) {
-                                    TextEditingController controller =
-                                        TextEditingController(
-                                            text: store.names[index]);
-                                    return Scaffold(
-                                      backgroundColor: Colors.transparent,
-                                      body: GestureDetector(
-                                        behavior: HitTestBehavior.opaque,
-                                        onTap: () => Navigator.pop(context),
-                                        child: GestureDetector(
-                                          onTap: () {},
-                                          child: AlertDialog(
-                                            content: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const Text('Nome:'),
-                                                TextFieldWidget(
-                                                  textEditingController:
-                                                      controller,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    ElevatedButton(
-                                                        onPressed: () async {
-                                                          FocusScope.of(context)
-                                                              .unfocus();
+                        child: const Text(
+                          'verde sai',
+                          style: TextStyle(color: Colors.white),
+                        )),
+                  ))
+                ],
+              ),
+            ),
+            Expanded(
+              child: Observer(
+                builder: (_) {
+                  return Stack(
+                    children: [
+                      ListView.builder(
+                        itemCount: store.names.length,
+                        itemBuilder: (_, index) {
+                          return ListTile(
+                            tileColor: index < store.numberOfPlayers
+                                ? Colors.blue
+                                : index >= store.numberOfPlayers &&
+                                        index < store.numberOfPlayers * 2
+                                    ? Colors.lightGreen
+                                    : Colors.red,
+                            title: Text(
+                              store.names[index],
+                              style: index < store.numberOfPlayers * 2
+                                  ? const TextStyle(
+                                      color: Colors.black, fontSize: 36)
+                                  : const TextStyle(
+                                      color: Colors.black, fontSize: 18),
+                            ),
+                            onLongPress: () {
+                              store.removeName(store.names[index]);
+                            },
+                            onTap: () {
+                              showDialog(
+                                barrierDismissible: true,
+                                context: context,
+                                builder: (context) {
+                                  TextEditingController controller =
+                                      TextEditingController(
+                                          text: store.names[index]);
+                                  return Scaffold(
+                                    backgroundColor: Colors.transparent,
+                                    body: GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () => Navigator.pop(context),
+                                      child: GestureDetector(
+                                        onTap: () {},
+                                        child: AlertDialog(
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Text('Nome:'),
+                                              TextFieldWidget(
+                                                textEditingController:
+                                                    controller,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  ElevatedButton(
+                                                      onPressed: () async {
+                                                        FocusScope.of(context)
+                                                            .unfocus();
 
-                                                          final response =
-                                                              await store
-                                                                  .updatePlayer(
-                                                                      controller
-                                                                          .text,
-                                                                      index);
-                                                          if (!response) {
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                              const SnackBar(
-                                                                behavior:
-                                                                    SnackBarBehavior
-                                                                        .floating,
-                                                                backgroundColor:
-                                                                    Colors.red,
-                                                                margin: EdgeInsets
-                                                                    .only(
-                                                                        bottom:
-                                                                            80,
-                                                                        left:
-                                                                            16,
-                                                                        right:
-                                                                            16),
-                                                                content: Text(
-                                                                    'Já existe um jogador com este nome!'),
-                                                              ),
-                                                            );
-                                                          } else {
-                                                            Navigator.pop(
-                                                                context);
-                                                          }
-                                                        },
-                                                        child: const Text(
-                                                            'Salvar'))
-                                                  ],
-                                                )
-                                              ],
-                                            ),
+                                                        final response =
+                                                            await store
+                                                                .updatePlayer(
+                                                                    controller
+                                                                        .text,
+                                                                    index);
+                                                        if (!response) {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            const SnackBar(
+                                                              behavior:
+                                                                  SnackBarBehavior
+                                                                      .floating,
+                                                              backgroundColor:
+                                                                  Colors.red,
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      bottom:
+                                                                          80,
+                                                                      left: 16,
+                                                                      right:
+                                                                          16),
+                                                              content: Text(
+                                                                  'Já existe um jogador com este nome!'),
+                                                            ),
+                                                          );
+                                                        } else {
+                                                          Navigator.pop(
+                                                              context);
+                                                        }
+                                                      },
+                                                      child:
+                                                          const Text('Salvar'))
+                                                ],
+                                              )
+                                            ],
                                           ),
                                         ),
                                       ),
-                                    );
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        ),
-                        Positioned(
-                          top: 4,
-                          right: 4,
-                          child: Observer(
-                              builder: (_) =>
-                                  Text('Vitórias: ${store.winStreak}')),
-                        ),
-                      ],
-                    ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      Positioned(
+                        top: 4,
+                        right: 4,
+                        child: Observer(
+                            builder: (_) =>
+                                Text('Vitórias: ${store.winStreak}')),
+                      ),
+                    ],
                   );
                 },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

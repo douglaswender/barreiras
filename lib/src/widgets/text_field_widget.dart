@@ -17,24 +17,28 @@ class TextFieldWidget extends StatefulWidget {
   final bool heightExpanded;
   final AutovalidateMode? autovalidateMode;
   final FocusNode? focusNode;
-  const TextFieldWidget({
-    Key? key,
-    this.textEditingController,
-    this.validator,
-    this.prefixIcon,
-    this.suffixIcon,
-    this.hintText,
-    this.obscureText = false,
-    this.onChanged,
-    this.textInputAction,
-    this.keyboardType,
-    this.inputFormatters,
-    this.maxLength,
-    this.textCapitalization = TextCapitalization.none,
-    this.heightExpanded = true,
-    this.autovalidateMode,
-    this.focusNode,
-  }) : super(key: key);
+  final bool? isCollapsed;
+  final bool? isDense;
+  const TextFieldWidget(
+      {Key? key,
+      this.textEditingController,
+      this.validator,
+      this.prefixIcon,
+      this.suffixIcon,
+      this.hintText,
+      this.obscureText = false,
+      this.onChanged,
+      this.textInputAction,
+      this.keyboardType,
+      this.inputFormatters,
+      this.maxLength,
+      this.textCapitalization = TextCapitalization.none,
+      this.heightExpanded = true,
+      this.autovalidateMode,
+      this.focusNode,
+      this.isCollapsed,
+      this.isDense})
+      : super(key: key);
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -72,7 +76,12 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         ),
         onChanged: widget.onChanged,
         validator: widget.validator,
+        textAlign: TextAlign.center,
         decoration: InputDecoration(
+          counterText: '',
+          isDense: widget.isDense,
+          isCollapsed: widget.isCollapsed,
+          //contentPadding: EdgeInsetsDirectional.zero,
           focusColor: Colors.white,
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.suffixIcon != null

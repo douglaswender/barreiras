@@ -44,10 +44,11 @@ class _ConfigPageState extends State<ConfigPage> {
                     const Text('Número de jogadores por barreira: '),
                     SizedBox(
                       width: 50,
-                      height: 50,
                       child: TextFieldWidget(
                         textEditingController: numberOfPlayersController,
                         keyboardType: TextInputType.number,
+                        maxLength: 2,
+                        isCollapsed: true,
                         onChanged: (value) {
                           if (value.isNotEmpty || value != '') {
                             store.setNumberOfPlayers(value);
@@ -65,10 +66,11 @@ class _ConfigPageState extends State<ConfigPage> {
                     const Text('Número máximo de vitórias: '),
                     SizedBox(
                       width: 50,
-                      height: 50,
                       child: TextFieldWidget(
                         textEditingController: maxWinStreakController,
                         keyboardType: TextInputType.number,
+                        maxLength: 2,
+                        isCollapsed: true,
                         onChanged: (value) {
                           if (value.isNotEmpty || value != '') {
                             store.setMaxWinStreak(value);
@@ -195,18 +197,18 @@ class _ConfigPageState extends State<ConfigPage> {
                 const SizedBox(
                   height: 8,
                 ),
-                Row(
-                  children: [
-                    Observer(builder: (_) {
-                      return Text(
-                        'Jogadores por barreira indicado: ${store.suggestedNumberOfPlayers}',
-                        style: const TextStyle(
-                          fontSize: 12,
-                        ),
-                      );
-                    }),
-                  ],
-                )
+                // Row(
+                //   children: [
+                //     Observer(builder: (_) {
+                //       return Text(
+                //         'Jogadores por barreira indicado: ${store.suggestedNumberOfPlayers}',
+                //         style: const TextStyle(
+                //           fontSize: 12,
+                //         ),
+                //       );
+                //     }),
+                //   ],
+                // )
               ],
             ),
           ),
